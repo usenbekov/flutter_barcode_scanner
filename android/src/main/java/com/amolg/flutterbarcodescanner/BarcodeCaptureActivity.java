@@ -103,6 +103,15 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
 
     private BroadcastReceiver finishBroadcast;
 
+    @Override
+    public Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
+        if (Build.VERSION.SDK_INT >= 34 && getApplicationInfo().targetSdkVersion >= 34) {
+            int RECEIVER_EXPORTED = 2;
+            return super.registerReceiver(receiver, filter, RECEIVER_EXPORTED);
+        }
+        return super.registerReceiver(receiver, filter);
+    }
+
     /**
      * Initializes the UI and creates the detector pipeline.
      */
